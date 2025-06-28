@@ -1,5 +1,8 @@
-import streamlit as st
 import os
+# Fix for protobuf compatibility issue with Python 3.13
+os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
+
+import streamlit as st
 from dotenv import load_dotenv
 from rag_service import RAGService
 from config import (

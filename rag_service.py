@@ -4,6 +4,9 @@ Handles document loading, embedding, and retrieval functionality.
 """
 
 import os
+# Fix for protobuf compatibility issue with Python 3.13
+os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
+
 from typing import List, Tuple, Optional
 from langchain_community.document_loaders import UnstructuredURLLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter

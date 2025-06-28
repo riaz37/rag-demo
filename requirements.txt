@@ -2,10 +2,11 @@ langchain
 langchain-community
 python-dotenv
 streamlit
-langchain-experimental
 sentence-transformers
 langchain-chroma
 langchainhub
 unstructured
 langchain-google-genai
+chromadb==0.4.22
+protobuf==3.20.3
 
