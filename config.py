@@ -186,7 +186,7 @@ moving and removalist services in Melbourne.
 ERROR_MESSAGES = {
     "initialization_failed": "❌ Failed to initialize RAG system. Please check your API keys and try again.",
     "response_error": "I'm sorry, I encountered an error while processing your question.",
-    "no_api_key": "Please set your GOOGLE_API_KEY in the environment variables.",
+    "no_api_key": "Please set your GOOGLE_API_KEY in the env",
     "loading_failed": "Failed to load documents from the website. Please check your internet connection."
 }
 
