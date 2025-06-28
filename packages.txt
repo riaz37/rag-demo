@@ -1,2 +1,0 @@
-libprotobuf-dev
-protobuf-compiler

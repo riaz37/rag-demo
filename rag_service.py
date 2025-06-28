@@ -4,17 +4,15 @@ Handles document loading, embedding, and retrieval functionality.
 """
 
 import os
-# Fix for protobuf compatibility issue with Python 3.13
-os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
-
 from typing import List, Tuple, Optional
 from langchain_community.document_loaders import UnstructuredURLLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, GoogleGenerativeAI
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.documents import Document
 from langchain.schema import Document
 
 from config import (
@@ -37,7 +35,7 @@ class RAGService:
     def __init__(self):
         """Initialize the RAG service."""
         self.documents: List[Document] = []
-        self.vectorstore: Optional[Chroma] = None
+        self.vectorstore: Optional[FAISS] = None
         self.retriever = None
         self.rag_chain = None
         self.embeddings = None
@@ -107,21 +105,21 @@ class RAGService:
         self.embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL)
         return self.embeddings
     
-    def create_vectorstore(self, docs: List[Document]) -> Chroma:
+    def create_vectorstore(self, docs: List[Document]) -> FAISS:
         """
         Create vector store from documents.
-        
+
         Args:
             docs: List of document chunks
-            
+
         Returns:
-            Chroma vector store instance
+            FAISS vector store instance
         """
         if self.embeddings is None:
             self.create_embeddings()
-            
-        self.vectorstore = Chroma.from_documents(
-            documents=docs, 
+
+        self.vectorstore = FAISS.from_documents(
+            documents=docs,
             embedding=self.embeddings
         )
         return self.vectorstore

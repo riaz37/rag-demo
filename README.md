@@ -9,6 +9,8 @@ A Retrieval-Augmented Generation (RAG) application that provides intelligent ans
 - **Interactive Chat Interface**: User-friendly Streamlit web interface with chat history
 - **Sample Questions**: Pre-built questions to help users get started
 - **Modular Architecture**: Clean, maintainable code structure
+- **Optimized Vector Search**: FAISS-powered similarity search for fast and accurate retrieval
+- **Cloud-Ready**: Optimized for deployment on Streamlit Community Cloud
 
 ## Services Covered
 
@@ -26,7 +28,7 @@ The AI assistant can answer questions about:
 - **Frontend**: Streamlit
 - **LLM**: Google Gemini 2.0 Flash
 - **Embeddings**: Google Generative AI Embeddings
-- **Vector Database**: Chroma
+- **Vector Database**: FAISS (Facebook AI Similarity Search)
 - **Framework**: LangChain
 - **Language**: Python 3.8+
 
@@ -101,14 +103,20 @@ The application will open in your default web browser at `http://localhost:8501`
 
 ```
 rag_demo/
-├── app.py                 # Main Streamlit application
-├── rag_service.py         # RAG functionality service class
-├── config.py              # Configuration settings
-├── requirements.txt       # Python dependencies
-├── .env.example          # Environment variables template
-├── .env                  # Environment variables (create from .env.example)
-├── README.md             # Project documentation
-└── venv/                 # Virtual environment
+├── app.py                    # Main Streamlit application
+├── rag_service.py            # RAG functionality service class
+├── config.py                 # Configuration settings
+├── requirements.txt          # Python dependencies
+├── packages.txt              # System packages for deployment
+├── .env.example             # Environment variables template
+├── .env                     # Environment variables (create from .env.example)
+├── .streamlit/
+│   └── config.toml          # Streamlit configuration
+├── deploy_guide.md          # Deployment instructions
+├── health_check.py          # Pre-deployment validation
+├── deploy.sh                # Deployment automation script
+├── README.md                # Project documentation
+└── venv/                    # Virtual environment
 ```
 
 ## Configuration
@@ -137,7 +145,46 @@ Modify the `SYSTEM_PROMPT` in `config.py` to change how the AI responds to quest
 
 ### Styling
 
-Update the `CUSTOM_CSS` in `config.py` to modify the application's appearance.
+The application uses Streamlit's native components for optimal theme compatibility. The interface automatically adapts to light and dark themes.
+
+## Deployment
+
+### Streamlit Community Cloud (Recommended)
+
+The application is optimized for deployment on Streamlit Community Cloud:
+
+1. **Push to GitHub**: Ensure your code is in a GitHub repository
+2. **Deploy on Streamlit Cloud**:
+   - Visit [share.streamlit.io](https://share.streamlit.io)
+   - Connect your GitHub repository
+   - Select the main branch and `app.py` as the main file
+3. **Configure Secrets**: Add your `GOOGLE_API_KEY` in the app's secrets management
+4. **Deploy**: The app will automatically deploy with all dependencies
+
+### Local Development
+
+For local development and testing:
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run health check
+python health_check.py
+
+# Start the application
+streamlit run app.py
+```
+
+### Other Platforms
+
+The application can also be deployed on:
+- **Heroku**: Use the provided configuration files
+- **Railway**: Direct deployment from GitHub
+- **Render**: Web service deployment
+- **Google Cloud Run**: Containerized deployment
+
+See `deploy_guide.md` for detailed platform-specific instructions.
 
 ## Troubleshooting
 
@@ -146,7 +193,8 @@ Update the `CUSTOM_CSS` in `config.py` to modify the application's appearance.
 1. **API Key Error**: Ensure your Google API key is correctly set in the `.env` file
 2. **Import Errors**: Make sure all dependencies are installed with `pip install -r requirements.txt`
 3. **Loading Issues**: Check your internet connection for website content loading
-4. **Memory Issues**: Restart the application if you encounter memory problems
+4. **Memory Issues**: The app uses FAISS for efficient memory usage, but restart if needed
+5. **Deployment Issues**: Run `python health_check.py` before deploying to catch common problems
 
 ### Error Messages
 
