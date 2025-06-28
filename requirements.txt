@@ -1,0 +1,11 @@
+langchain
+langchain-community
+python-dotenv
+streamlit
+langchain-experimental
+sentence-transformers
+langchain-chroma
+langchainhub
+unstructured
+langchain-google-genai
+
